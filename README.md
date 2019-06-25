@@ -7,3 +7,9 @@ In order to be able to run this jmeter test we need to store the mongodb driver 
 * [bson-3.10.2.jar](https://repo1.maven.org/maven2/org/mongodb/bson/3.10.2/bson-3.10.2.jar)
 
 And delete the old deprecated mongodb driver under ../Jmeter/lib/
+
+The following user defined variable can be changed on the testplan to change the mongodb connection:
+* mongoHost
+* mongoPort
+* databaseName
+* collectionName
