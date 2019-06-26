@@ -28,6 +28,16 @@
             <stringProp name="Argument.value">27017</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="username" elementType="Argument">
+            <stringProp name="Argument.name">username</stringProp>
+            <stringProp name="Argument.value">sepp</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="password" elementType="Argument">
+            <stringProp name="Argument.name">password</stringProp>
+            <stringProp name="Argument.value">test</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </elementProp>
       <stringProp name="TestPlan.user_define_classpath"></stringProp>
@@ -53,14 +63,18 @@
           <stringProp name="script">import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoClient;
 import com.mongodb.MongoClientSettings;
+import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
 import org.bson.Document;
 import java.util.Arrays;
 
 try {
+     MongoCredential credentials = 
+     	MongoCredential.createScramSha256Credential(vars.get(&quot;username&quot;), &quot;admin&quot;, vars.get(&quot;password&quot;).toCharArray());
 	MongoClientSettings settings = MongoClientSettings.builder()
 		.applyToClusterSettings {builder -&gt; 
 			builder.hosts(Arrays.asList(new ServerAddress(vars.get(&quot;mongoHost&quot;),vars.get(&quot;mongoPort&quot;).toInteger())))}
+		.credential(credentials)
 		.build();
 	
 	MongoClient mongoClient = MongoClients.create(settings);
@@ -81,9 +95,9 @@ catch (Exception e) {
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">10</stringProp>
+          <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">10</stringProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
